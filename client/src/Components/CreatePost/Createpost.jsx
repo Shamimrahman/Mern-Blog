@@ -73,70 +73,136 @@ const Createpost = () => {
     console.log(state);
   };
   return (
-    <div>
+    <div className="container">
       <div className="py-12">
-        <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 flex space-x-36">
-          <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg w-2/5 grid-cols-6">
-            <div className="p-6 bg-white border-b border-gray-200">
-              <form onSubmit={createPost}>
-                <div className="mb-4">
-                  <label className="text-xl text-gray-600 " htmlFor="title">
-                    Title <span classNameName="text-red-500">*</span>
-                  </label>
+        <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 space-x-36">
+          <form onSubmit={createPost}>
+            <div className="flex space-x-36">
+              <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg w-2/5 ">
+                <div className="p-6 bg-white border-b border-gray-200">
+                  <div className="mb-4">
+                    <label className="text-xl text-gray-600 " htmlFor="title">
+                      Title <span classNameName="text-red-500">*</span>
+                    </label>
+                    <br></br>
+                    <input
+                      type="text"
+                      className="border-2 text-gray-800 border-gray-300 p-2 w-full"
+                      name="title"
+                      id="title"
+                      required
+                      onChange={handleInput}
+                      value={state.title}
+                    ></input>
+                  </div>
+
                   <br></br>
-                  <input
-                    type="text"
-                    className="border-2 text-gray-800 border-gray-300 p-2 w-full"
-                    name="title"
-                    id="title"
-                    required
-                    onChange={handleInput}
-                    value={state.title}
-                  ></input>
-                </div>
 
-                <br></br>
+                  <div className="group ">
+                    <label htmlFor="body" className="text-xl text-gray-600">
+                      Post body
+                    </label>
+                    <ReactQuill
+                      theme="snow"
+                      id="body"
+                      type="text"
+                      placeholder="Post body..."
+                      value={value}
+                      className="text-gray-800"
+                      onChange={setValue}
+                    />
+                  </div>
 
-                <div className="group ">
-                  <label htmlFor="body" className="text-xl text-gray-600">
-                    Post body
-                  </label>
-                  <ReactQuill
-                    theme="snow"
-                    id="body"
-                    type="text"
-                    placeholder="Post body..."
-                    value={value}
-                    className="text-gray-800"
-                    onChange={setValue}
-                  />
-                </div>
-
-                <br></br>
-
-                <div className="mb-4 text-gray-800">
-                  <label htmlFor="image" className="text-xl text-gray-600">
-                    {userImage}
-                  </label>
                   <br></br>
-                  <input
-                    type="file"
-                    className="border-2 border-gray-300 p-2 w-full"
-                    name="image"
-                    id="image"
-                    onChange={fileHandle}
-                  ></input>
-                </div>
 
-                <div className="mb-8">
-                  <label className="text-xl text-gray-600">
-                    Content <span className="text-red-500">*</span>
-                  </label>
+                  <div className="mb-8">
+                    <label
+                      className="text-xl text-gray-600 "
+                      htmlFor="description"
+                    >
+                      Content <span className="text-red-500">*</span>
+                    </label>
+                    <br></br>
+                    <br></br>
+                    <textarea
+                      name="description"
+                      id="description"
+                      className="border-2 border-gray-500 w-full text-gray-800"
+                      onChange={handleDescription}
+                      defaultValue={state.description}
+                      maxLength="150"
+                    ></textarea>
+                    <p className="text-black">
+                      {state.description ? state.description.length : 0}
+                    </p>
+                  </div>
+
+                  <div className="mb-4 text-gray-800">
+                    <label htmlFor="image" className="text-xl text-gray-600">
+                      {userImage}
+                    </label>
+                    <br></br>
+                    <input
+                      type="file"
+                      className="border-2 border-gray-300 p-2 w-full"
+                      name="image"
+                      id="image"
+                      onChange={fileHandle}
+                    ></input>
+                  </div>
+                </div>
+              </div>
+
+              {/**slug  */}
+              <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg w-2/5 h-2/5  ">
+                <div className="p-6 bg-white border-b border-gray-200">
+                  <div className="mb-4">
+                    <label className="text-xl text-gray-600 " htmlFor="slug">
+                      Post Url <span classNameName="text-red-500">*</span>
+                    </label>
+                    <br></br>
+                    <input
+                      type="text"
+                      className="border-2 text-gray-800 border-gray-300 p-2 w-full"
+                      name="slug"
+                      id="slug"
+                      required
+                      placeholder="Post URL..."
+                      onChange={slugHandle}
+                      value={slug}
+                    ></input>
+                  </div>
+
+                  <div className="flex p-1">
+                    {slugBtn ? (
+                      <button
+                        role="submit"
+                        className="p-3 bg-gray-500 text-white hover:bg-blue-400"
+                        required
+                        type="submit"
+                        onClick={handleSlugUpdateBtn}
+                      >
+                        Update Slug
+                      </button>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+
+                  <div className="mb-4 text-gray-800">
+                    <label
+                      htmlFor="description"
+                      className="text-xl text-gray-600"
+                    >
+                      Image Preview
+                    </label>
+                    <br></br>
+                    {imagePreview ? <img src={imagePreview}></img> : ""}
+                  </div>
+
                   <br></br>
-                  <textarea
-                    name="content"
-                    className="border-2 border-gray-500"
-                  ></textarea>
+
+                  <br></br>
                 </div>
 
                 <div className="flex p-1">
@@ -149,87 +215,9 @@ const Createpost = () => {
                     Submit
                   </button>
                 </div>
-              </form>
+              </div>
             </div>
-          </div>
-          {/**slug  */}
-
-          <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg w-2/5 grid-cols-6">
-            <div className="p-6 bg-white border-b border-gray-200">
-              <div className="mb-4">
-                <label className="text-xl text-gray-600 " htmlFor="slug">
-                  Post Url <span classNameName="text-red-500">*</span>
-                </label>
-                <br></br>
-                <input
-                  type="text"
-                  className="border-2 text-gray-800 border-gray-300 p-2 w-full"
-                  name="slug"
-                  id="slug"
-                  required
-                  placeholder="Post URL..."
-                  onChange={slugHandle}
-                  value={slug}
-                ></input>
-              </div>
-
-              <div className="flex p-1">
-                {slugBtn ? (
-                  <button
-                    role="submit"
-                    className="p-3 bg-gray-500 text-white hover:bg-blue-400"
-                    required
-                    type="submit"
-                    onClick={handleSlugUpdateBtn}
-                  >
-                    Update Slug
-                  </button>
-                ) : (
-                  ""
-                )}
-              </div>
-
-              <div className="mb-4 text-gray-800">
-                <label htmlFor="description" className="text-xl text-gray-600">
-                  Image Preview
-                </label>
-                <br></br>
-                {imagePreview ? <img src={imagePreview}></img> : ""}
-              </div>
-
-              <br></br>
-              <div className="mb-8">
-                <label className="text-xl text-gray-600 " htmlFor="description">
-                  Content <span className="text-red-500">*</span>
-                </label>
-                <br></br>
-                <br></br>
-                <textarea
-                  name="description"
-                  id="description"
-                  className="border-2 border-gray-500 w-full text-gray-800"
-                  onChange={handleDescription}
-                  defaultValue={state.description}
-                  maxLength="150"
-                ></textarea>
-                <p className="text-black">
-                  {state.description ? state.description.length : 0}
-                </p>
-              </div>
-              <br></br>
-            </div>
-
-            <div className="flex p-1">
-              <button
-                role="submit"
-                className="p-3 bg-gray-500 text-white hover:bg-blue-400"
-                required
-                type="submit"
-              >
-                Submit
-              </button>
-            </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>
