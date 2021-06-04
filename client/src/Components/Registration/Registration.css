@@ -1,0 +1,65 @@
+.reg-css {
+  background: transparent;
+}
+
+.mat-icon {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 7px;
+  color: gray;
+  margin: 10px;
+  border: 1px solid #343838;
+  border-radius: 8px;
+  width: 28vw;
+  margin: 10px 10px;
+  margin-bottom: 0;
+}
+
+.mat-icon > input {
+  padding: 5px;
+  background: transparent;
+  border: none;
+  outline-width: 0;
+  color: white;
+  width: 100%;
+  font-size: large;
+}
+
+.mat-icon > input:focus {
+  outline: none !important;
+
+  box-shadow: 0 0 5px #719ece;
+}
+
+@media screen and (max-width: 768px) {
+  .mat-icon {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 7px;
+    color: gray;
+    margin: 10px;
+    border: 1px solid #343838;
+    border-radius: 8px;
+    width: 70vw;
+    margin: 10px 10px;
+    margin-bottom: 0;
+  }
+
+  .input:focus {
+    outline: none !important;
+    border: 1px solid red;
+    box-shadow: 0 0 10px #719ece;
+  }
+
+  .mat-icon > input {
+    padding: 5px;
+    background: transparent;
+    border: none;
+    outline-width: 0;
+    color: white;
+    width: 100%;
+    font-size: large;
+  }
+}
