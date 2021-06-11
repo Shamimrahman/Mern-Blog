@@ -34,7 +34,7 @@ const Registraion = () => {
     setUser({ ...user, [name]: value });
   };
 
-  const saveData = async (e) => {
+  /*const saveData = async (e) => {
     e.preventDefault();
     try {
       const { name, email, password, cpassword } = user;
@@ -65,14 +65,14 @@ const Registraion = () => {
       }
     } catch (error) {}
   };
-
+*/
   //form validation
 
   //data joma hobe
-  /*const saveData = (e) => {
+  const saveData = (e) => {
     e.preventDefault();
     const res = dispatch(PostReg(user));
-  }; */
+  };
 
   /*useEffect(() => {
     if (registerErrors.length > 0) {

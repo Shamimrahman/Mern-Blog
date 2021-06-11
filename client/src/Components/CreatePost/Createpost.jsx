@@ -1,8 +1,17 @@
 import React, { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // ES6
-
+import { createAction } from "../../store/asyncActions/PostMethods";
+import { useDispatch, useSelector } from "react-redux";
 const Createpost = () => {
+  //redux tools
+  const dispatch = useDispatch();
+
+  //take user from authRed using useSelector
+
+  const { user } = useSelector((state) => state.AuthReducers);
+  console.log(user);
+
   //for image upload
   const [userImage, setuserImage] = useState("Choose Image");
   //for image preview

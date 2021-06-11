@@ -3,8 +3,11 @@ import thunkMiddleware from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 
 import AuthReducer from "./reducers/AuthReducers";
+import PostReducer from "./reducers/postReducer";
 const rootReducer = combineReducers({
   AuthReducer,
+  PostReducer,
+  //NOW TAKE LOADER IN TYPES
 });
 
 //middleware

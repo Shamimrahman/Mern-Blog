@@ -1,4 +1,4 @@
-export let initialState = 0;
+export let initialState = null;
 
 export const reducer = (state = initialState, action) => {
   if (action.type === "USER") {
@@ -9,5 +9,5 @@ export const reducer = (state = initialState, action) => {
 
 //re fresh korar poro navbar er state change hobe na
 initialState = {
-  loggedIn: localStorage.getItem("isLoggedin") || true,
+  loggedIn: localStorage.getItem("isLoggedin") || false,
 };

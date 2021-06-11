@@ -22,6 +22,8 @@ export const PostReg = (state) => {
     try {
       const { data } = await axios.post("/register", state, config);
       dispatch({ type: CLOSE_LOADER });
+      localStorage.setItem("myToken", data.token);
+      console.log(data);
     } catch (error) {
       dispatch({ type: CLOSE_LOADER });
       //get errror check or form valodation
