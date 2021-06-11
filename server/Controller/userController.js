@@ -24,6 +24,8 @@ module.exports.registrationVal = [
     .withMessage("Pass Word Need 6 characters"),
 ];
 
+// token two
+
 //user Registration
 const User = require("../Model/user");
 module.exports.register = async (req, res) => {
@@ -40,7 +42,7 @@ module.exports.register = async (req, res) => {
     if (userExist) {
       return res.status(400).json({ message: "Email is Already Taken" });
     } else if (password != cpassword) {
-      return res.status(401).json({ Message: "Not Match pass" });
+      return res.status(401).json({ message: "Not Match pass" });
     } else {
       const user = new User({
         name: req.body.name,
@@ -49,8 +51,19 @@ module.exports.register = async (req, res) => {
         cpassword: req.body.cpassword,
       });
 
+      const token = await user.generateAuthToken();
+
+      console.log(`The Reg token part is ${token}`);
+      res.cookie("jwt", token, {
+        expires: new Date(Date.now() + 25892000000),
+        httpOnly: true,
+      });
+
       await user.save();
-      return res.status(201).json({ Message: "You are done" });
+
+      return res
+        .status(200)
+        .json({ msg: "Your account has been created", token });
     }
   } catch (error) {
     res.status(500).send(error);
