@@ -4,11 +4,17 @@ import Fade from "react-reveal/Fade";
 import { Link, useHistory } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { postLogin } from "../../store/asyncActions/Authaction";
+import { useDispatch, useSelector } from "react-redux";
+import { usercontext } from "../../App";
+const Login = ({ setUser, user }) => {
+  const { dispatch, state } = useContext(usercontext);
 
-const Login = () => {
+  const { loginErrors, loading } = useSelector((state) => state.AuthReducer);
+
   const history = useHistory();
   //Onchange functionality to check amra j input nite pari
-  const [user, setUser] = useState({
+  const [userr, setUserr] = useState({
     email: "",
     password: "",
   });
@@ -18,7 +24,7 @@ const Login = () => {
     name = e.target.name;
     value = e.target.value;
 
-    setUser({ ...user, [name]: value });
+    setUserr({ ...userr, [name]: value });
   };
 
   //login functionality
@@ -26,7 +32,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const { email, password } = user;
+      const { email, password } = userr;
 
       const res = await fetch("/login", {
         method: "POST",
@@ -50,9 +56,21 @@ const Login = () => {
       } else {
         toast.success("Login Successfully");
         history.push("/home");
+
+        //cotext api
+        dispatch({ type: "USER", payload: true });
       }
     } catch (error) {}
   };
+
+  /*const dispatch = useDispatch();
+
+
+  const login = (e) => {
+    e.preventDefault();
+    dispatch(postLogin(user));
+  };
+*/
   return (
     <div>
       <Fade bottom>
@@ -77,7 +95,7 @@ const Login = () => {
                     className="border css-des rounded px-3 py-2 w-full focus:outline-none focus:border-gray-500 focus:shadow border-gray-800 shadow-2xl "
                     placeholder="Email"
                     onChange={inputHandle}
-                    value={user.email}
+                    value={userr.email}
                   />
                 </div>
 
@@ -90,7 +108,7 @@ const Login = () => {
                    css-des px-3 py-2 w-full focus:outline-none focus:border-gray-500 border-gray-800 focus:shadow shadow-2xl"
                     placeholder="Password "
                     onChange={inputHandle}
-                    value={user.password}
+                    value={userr.password}
                   />
                 </div>
 

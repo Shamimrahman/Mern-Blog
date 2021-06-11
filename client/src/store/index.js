@@ -8,7 +8,6 @@ const rootReducer = combineReducers({
 });
 
 //middleware
-
 const middlewares = [thunkMiddleware];
 //create centralize store
 

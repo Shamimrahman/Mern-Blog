@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Registration.css";
 import PeopleIcon from "@material-ui/icons/People";
 import EmailIcon from "@material-ui/icons/Email";
@@ -7,8 +7,10 @@ import Fade from "react-reveal/Fade";
 import { useHistory } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 //var FormData = require('form-data');
+import { useDispatch, useSelector } from "react-redux";
+import { PostReg } from "../../store/asyncActions/Authaction";
+//import toast, { Toaster } from "react-hot-toast";
 
 const Registraion = () => {
   const history = useHistory();
@@ -19,6 +21,10 @@ const Registraion = () => {
     password: "",
     cpassword: "",
   });
+
+  const { loading, registerErrors } = useSelector((state) => state.AuthReducer);
+
+  const dispatch = useDispatch();
 
   let name, value;
   const inputHandle = (e) => {
@@ -60,6 +66,19 @@ const Registraion = () => {
     } catch (error) {}
   };
 
+  //form validation
+
+  //data joma hobe
+  /*const saveData = (e) => {
+    e.preventDefault();
+    const res = dispatch(PostReg(user));
+  }; */
+
+  /*useEffect(() => {
+    if (registerErrors.length > 0) {
+      registerErrors.map((error) => toast.error(error.message));
+    }
+  }, [registerErrors]); */
   return (
     <div>
       <Fade left>
@@ -160,7 +179,17 @@ const Registraion = () => {
         </section>
       </Fade>
 
-      <ToastContainer position="top-center"></ToastContainer>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      ></ToastContainer>
 
       {/* Same as */}
     </div>

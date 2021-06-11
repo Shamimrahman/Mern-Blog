@@ -1,7 +1,60 @@
-import React from "react";
+import React, { useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-
+import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { usercontext } from "../../App";
 const Navbar = () => {
+  //logout
+
+  const { state, dispatch } = useContext(usercontext);
+
+  const Rendermenu = () => {
+    if (state) {
+      return (
+        <div>
+          <Link to="/home" className="mr-5 hover:text-blue-500 "></Link>
+          <Link to="/blog" className="mr-5 hover:text-blue-500 ">
+            Blog
+          </Link>
+          <Link to="/cp" className="mr-5 hover:text-blue-500 ">
+            Create-Post
+          </Link>
+
+          <Link to="/logout" className="mr-5 hover:text-blue-500">
+            Logout
+          </Link>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <Link to="/registration" className="mr-5 hover:text-blue-500 ">
+            Registration
+          </Link>
+          <Link to="/" className="mr-5 hover:text-blue-500 ">
+            Login
+          </Link>
+        </div>
+      );
+    }
+  };
+
+  const Propic = () => {
+    if (state) {
+      return (
+        <img
+          className="h-10 w-10 rounded-full"
+          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+          alt=""
+        />
+      );
+    } else {
+      return null;
+    }
+  };
+
   return (
     <div>
       <header
@@ -28,31 +81,10 @@ const Navbar = () => {
             <span className="mr-14 text-xl">Mern Blog</span>
           </a>
           <nav className="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-700	flex flex-wrap items-center text-base justify-center">
-            <Link to="/home" className="mr-5 hover:text-blue-500 "></Link>
-            <Link to="/blog" className="mr-5 hover:text-blue-500 ">
-              Blog
-            </Link>
-            <Link to="/cp" className="mr-5 hover:text-blue-500 ">
-              Create-Post
-            </Link>
-
-            <Link to="/registration" className="mr-5 hover:text-blue-500 ">
-              Registration
-            </Link>
-            <Link to="/" className="mr-5 hover:text-blue-500 ">
-              Login
-            </Link>
-
-            <Link to="/logout" className="mr-5 hover:text-blue-500">
-              Logout
-            </Link>
+            <Rendermenu></Rendermenu>
           </nav>
           <div className="inline-flex  items-center py-1 px-3 focus:outline-none rounded text-base mt-4 md:mt-0 ">
-            <img
-              className="h-10 w-10 rounded-full"
-              src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-              alt=""
-            />
+            <Propic></Propic>
           </div>
         </div>
       </header>
