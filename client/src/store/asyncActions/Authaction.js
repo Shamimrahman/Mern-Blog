@@ -22,7 +22,10 @@ export const PostReg = (state) => {
     try {
       const { data } = await axios.post("/register", state, config);
       dispatch({ type: CLOSE_LOADER });
+      //reg er time a amra token generate korbo
+      //backend thekeo hoitese
       localStorage.setItem("myToken", data.token);
+      //ekhn mytoken authReducer a access korte hobe
       console.log(data);
     } catch (error) {
       dispatch({ type: CLOSE_LOADER });

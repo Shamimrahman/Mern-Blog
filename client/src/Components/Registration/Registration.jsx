@@ -12,17 +12,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { PostReg } from "../../store/asyncActions/Authaction";
 //import toast, { Toaster } from "react-hot-toast";
 
-const Registraion = () => {
+const Registraion = (props) => {
   const history = useHistory();
 
-  const [user, setUser] = useState({
+  const [state, setstate] = useState({
     name: "",
     email: "",
     password: "",
     cpassword: "",
   });
 
-  const { loading, registerErrors } = useSelector((state) => state.AuthReducer);
+  const { loading, registerErrors, user } = useSelector(
+    (state) => state.AuthReducer
+  );
 
   const dispatch = useDispatch();
 
@@ -31,13 +33,13 @@ const Registraion = () => {
     name = e.target.name;
     value = e.target.value;
     console.log(name, value);
-    setUser({ ...user, [name]: value });
+    setstate({ ...state, [name]: value });
   };
 
   /*const saveData = async (e) => {
     e.preventDefault();
     try {
-      const { name, email, password, cpassword } = user;
+      const { name, email, password, cpassword } = state;
       const res = await fetch("/register", {
         method: "POST",
         headers: {
@@ -71,14 +73,13 @@ const Registraion = () => {
   //data joma hobe
   const saveData = (e) => {
     e.preventDefault();
-    const res = dispatch(PostReg(user));
+    const res = dispatch(PostReg(state));
+    if (user) {
+      history.push("/");
+    }
   };
 
-  /*useEffect(() => {
-    if (registerErrors.length > 0) {
-      registerErrors.map((error) => toast.error(error.message));
-    }
-  }, [registerErrors]); */
+  useEffect(() => {}, [registerErrors]);
   return (
     <div>
       <Fade left>
@@ -104,7 +105,7 @@ const Registraion = () => {
                           placeholder="Your Name"
                           required
                           onChange={inputHandle}
-                          value={user.name}
+                          value={state.name}
                         />
                       </div>
 
@@ -120,7 +121,7 @@ const Registraion = () => {
                           style={{ transition: "all 0.15s ease 0s" }}
                           required
                           onChange={inputHandle}
-                          value={user.email}
+                          value={state.email}
                         />
                       </div>
 
@@ -137,7 +138,7 @@ const Registraion = () => {
                           style={{ transition: "all 0.15s ease 0s" }}
                           required
                           onChange={inputHandle}
-                          value={user.password}
+                          value={state.password}
                         />
                         <br></br>
                         <span></span>
@@ -155,7 +156,7 @@ const Registraion = () => {
                           style={{ transition: "all 0.15s ease 0s" }}
                           required
                           onChange={inputHandle}
-                          value={user.cpassword}
+                          value={state.cpassword}
                         />
                       </div>
 

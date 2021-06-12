@@ -22,6 +22,33 @@ const initialState = {
   user: "",
 };
 
+//access my token
+
+const token = localStorage.getItem("myToken");
+console.log(token);
+//ai token a amader ekjon user er sob info ase
+//ekhn amader ai token ke decode korte hobe using jwt-decode
+
+//check korte hobe j token expire hoise naki thn decode korte hobe
+if (token) {
+  const decodeToken = jwt_decode(token);
+  console.log(decodeToken);
+  const expiresIn = new Date(decodeToken.exp * 1000);
+  if (new Date() > expiresIn) {
+    localStorage.removeItem("myToken");
+  } else {
+    //initial state er token k access kora
+    initialState.token = token;
+
+    //thn decodeToken korar fole user a info gulo destructure korbo
+    const { user } = decodeToken;
+    console.log(user);
+    initialState.user = user;
+
+    //user k access
+    //thn redux a dekhbo
+  }
+}
 /*const verifyToken = (token) => {
   const decodeToken = jwt_decode(token);
   const expiresIn = new Date(decodeToken.exp * 1000);
@@ -41,9 +68,7 @@ if (token) {
     initialState.user = user;
   }
 }
-
 */
-
 //now take function
 //for login logout reg
 const AuthReducer = (state = initialState, action) => {
