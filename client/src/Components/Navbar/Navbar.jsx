@@ -5,16 +5,25 @@ import { useHistory } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { usercontext } from "../../App";
+import { LOGOUT } from "../../store/types/usertypes";
 const Navbar = () => {
-  //logout
+  const { user } = useSelector((state) => state.AuthReducer);
+  const dispatch = useDispatch();
 
-  const { state, dispatch } = useContext(usercontext);
+  const logout = () => {
+    localStorage.removeItem("myToken");
+    dispatch({ type: "LOGOUT" });
 
+    //thne AuthReducers a jaite hobe
+    //logout er type dite hobe
+  };
   const Rendermenu = () => {
-    if (state) {
+    if (user) {
       return (
         <div>
-          <Link to="/home" className="mr-5 hover:text-blue-500 "></Link>
+          <Link to="/home" className="mr-5 hover:text-blue-500 ">
+            Home
+          </Link>
           <Link to="/blog" className="mr-5 hover:text-blue-500 ">
             Blog
           </Link>
@@ -22,7 +31,11 @@ const Navbar = () => {
             Create-Post
           </Link>
 
-          <Link to="/logout" className="mr-5 hover:text-blue-500">
+          <Link
+            to="/logout"
+            className="mr-5 hover:text-blue-500"
+            onClick={logout}
+          >
             Logout
           </Link>
         </div>
@@ -42,7 +55,7 @@ const Navbar = () => {
   };
 
   const Propic = () => {
-    if (state) {
+    if (user) {
       return (
         <img
           className="h-10 w-10 rounded-full"

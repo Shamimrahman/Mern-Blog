@@ -74,12 +74,17 @@ const Registraion = (props) => {
   const saveData = (e) => {
     e.preventDefault();
     const res = dispatch(PostReg(state));
-    if (user) {
-      history.push("/");
-    }
   };
 
-  useEffect(() => {}, [registerErrors]);
+  useEffect(() => {
+    if (registerErrors) {
+      registerErrors.map((error) => toast.error(error.msg));
+    }
+
+    if (user) {
+      history.push("/blog");
+    }
+  }, [registerErrors, user]);
   return (
     <div>
       <Fade left>

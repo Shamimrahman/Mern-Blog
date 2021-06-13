@@ -26,6 +26,9 @@ export const PostReg = (state) => {
       //backend thekeo hoitese
       localStorage.setItem("myToken", data.token);
       //ekhn mytoken authReducer a access korte hobe
+
+      //reg howar pore directly log in page a jawar jonno
+      dispatch({ type: "SET_TOKEN", payload: data.token });
       console.log(data);
     } catch (error) {
       dispatch({ type: CLOSE_LOADER });
@@ -42,6 +45,7 @@ export const PostReg = (state) => {
 
 export const postLogin = (state) => {
   return async (dispatch) => {
+    //call this Postlogin in to login.jsx
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -56,6 +60,7 @@ export const postLogin = (state) => {
     } catch (error) {
       dispatch({ type: CLOSE_LOADER });
       dispatch({ type: LOGIN_ERRORS, payload: error.response.data.errors });
+      console.log(error.response);
     }
   };
 };

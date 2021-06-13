@@ -13,7 +13,8 @@ import store from "./store/index";
 import { initialState, reducer } from "./reducer/useReducer";
 import { useHistory } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-
+import PrivateRoute from "./Private/PrivateRoute";
+import RouteLinks from "./Private/RouteLinks";
 //for navbar state change
 
 export const usercontext = createContext();
@@ -22,12 +23,12 @@ export const Routing = () => {
     <div>
       <Switch>
         <Route exact path="/registration" component={Registration}></Route>
-        <Route exact path="/home" component={Home}></Route>
+        <PrivateRoute exact path="/home" component={Home}></PrivateRoute>
         <Route exact path="/logout" component={Logout}></Route>
-        <Route exact path="/blog" component={Blog}></Route>
+        <PrivateRoute exact path="/blog" component={Blog}></PrivateRoute>
         <Route exact path="/cp" component={Createpost}></Route>
 
-        <Route exact path="/" component={Login}></Route>
+        <RouteLinks exact path="/" component={Login}></RouteLinks>
       </Switch>
       ;
     </div>
@@ -37,14 +38,12 @@ const App = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   return (
-    <usercontext.Provider value={{ state, dispatch }}>
-      <Provider store={store}>
-        <div>
-          <Navbar></Navbar>
-          <Routing></Routing>
-        </div>
-      </Provider>
-    </usercontext.Provider>
+    <Provider store={store}>
+      <div>
+        <Navbar></Navbar>
+        <Routing></Routing>
+      </div>
+    </Provider>
   );
 };
 

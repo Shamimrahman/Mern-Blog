@@ -5,7 +5,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { usercontext } from "../../App";
 
 const Logout = () => {
-  const { dispatch, state } = useContext(usercontext);
   const history = useHistory();
   useEffect(() => {
     fetch("/logout", {
@@ -17,7 +16,6 @@ const Logout = () => {
     }).then((res) => {
       history.push("/");
 
-      dispatch({ type: "USER", payload: false });
       if (res.status === 200) {
         toast.success("Logout Successfully");
       }

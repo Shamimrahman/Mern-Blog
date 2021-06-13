@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import "./Login.css";
 import Fade from "react-reveal/Fade";
 import { Link, useHistory } from "react-router-dom";
@@ -8,13 +8,12 @@ import { postLogin } from "../../store/asyncActions/Authaction";
 import { useDispatch, useSelector } from "react-redux";
 import { usercontext } from "../../App";
 const Login = ({ setUser, user }) => {
-  const { dispatch, state } = useContext(usercontext);
-
   const { loginErrors, loading } = useSelector((state) => state.AuthReducer);
+  const dispatch = useDispatch();
 
   const history = useHistory();
   //Onchange functionality to check amra j input nite pari
-  const [userr, setUserr] = useState({
+  const [state, setstate] = useState({
     email: "",
     password: "",
   });
@@ -24,15 +23,15 @@ const Login = ({ setUser, user }) => {
     name = e.target.name;
     value = e.target.value;
 
-    setUserr({ ...userr, [name]: value });
+    setstate({ ...state, [name]: value });
   };
 
   //login functionality
-  const login = async (e) => {
+  /*const login = async (e) => {
     e.preventDefault();
 
     try {
-      const { email, password } = userr;
+      const { email, password } = state;
 
       const res = await fetch("/login", {
         method: "POST",
@@ -61,16 +60,20 @@ const Login = ({ setUser, user }) => {
         dispatch({ type: "USER", payload: true });
       }
     } catch (error) {}
-  };
-
-  /*const dispatch = useDispatch();
-
+  }; */
 
   const login = (e) => {
     e.preventDefault();
-    dispatch(postLogin(user));
+    console.log(state);
+    dispatch(postLogin(state));
   };
-*/
+
+  useEffect(() => {
+    if (loginErrors.length > 0) {
+      loginErrors.map((error) => toast.error(error.msg));
+    }
+  }, [loginErrors]);
+
   return (
     <div>
       <Fade bottom>
@@ -95,7 +98,7 @@ const Login = ({ setUser, user }) => {
                     className="border css-des rounded px-3 py-2 w-full focus:outline-none focus:border-gray-500 focus:shadow border-gray-800 shadow-2xl "
                     placeholder="Email"
                     onChange={inputHandle}
-                    value={userr.email}
+                    value={state.email}
                   />
                 </div>
 
@@ -108,7 +111,7 @@ const Login = ({ setUser, user }) => {
                    css-des px-3 py-2 w-full focus:outline-none focus:border-gray-500 border-gray-800 focus:shadow shadow-2xl"
                     placeholder="Password "
                     onChange={inputHandle}
-                    value={userr.password}
+                    value={state.password}
                   />
                 </div>
 

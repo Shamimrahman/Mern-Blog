@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useSelector } from "react-redux";
 const Home = () => {
-  const history = useHistory();
+  const { user } = useSelector((state) => state.AuthReducer);
+  /*const history = useHistory();
   const [user, setUser] = useState({
     name: "",
   });
@@ -29,6 +31,7 @@ const Home = () => {
     getData();
   }, []);
 
+  */
   return (
     <div>
       <section className="text-gray-400 bg-gray-900 body-font">
