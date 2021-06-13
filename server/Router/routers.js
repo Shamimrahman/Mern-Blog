@@ -26,5 +26,5 @@ const auth = require("../Middleware/auth");
 router.get("/getdata", auth, getData);
 
 //logout
-router.get("/logout", auth, logout);
+//router.get("/logout", auth, logout);
 module.exports = router;
