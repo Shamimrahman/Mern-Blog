@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffct } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // ES6
 import { createAction } from "../../store/asyncActions/PostMethods";
@@ -9,7 +9,7 @@ const Createpost = () => {
 
   //take user from authRed using useSelector
 
-  const { user } = useSelector((state) => state.AuthReducers);
+  const { user } = useSelector((state) => state.AuthReducer);
   console.log(user);
 
   //for image upload
@@ -81,6 +81,13 @@ const Createpost = () => {
     e.preventDefault();
     console.log(state);
   };
+
+  useEffect(() => {
+    effect;
+    return () => {
+      cleanup;
+    };
+  }, [input]);
   return (
     <div className="container">
       <div className="py-12">
