@@ -1,4 +1,4 @@
-import React, { useState, useEffct } from "react";
+import React, { useState, useEffect } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // ES6
 import { createAction } from "../../store/asyncActions/PostMethods";
@@ -9,8 +9,11 @@ const Createpost = () => {
 
   //take user from authRed using useSelector
 
-  const { user } = useSelector((state) => state.AuthReducer);
-  console.log(user);
+  const {
+    user: { _id, name },
+  } = useSelector((state) => state.AuthReducer);
+
+  console.log(_id, name);
 
   //for image upload
   const [userImage, setuserImage] = useState("Choose Image");
@@ -67,6 +70,7 @@ const Createpost = () => {
   };
 
   //quill
+  //body part
 
   const [value, setValue] = useState("");
 
@@ -79,15 +83,28 @@ const Createpost = () => {
   //post info from form on submit
   const createPost = (e) => {
     e.preventDefault();
-    console.log(state);
+
+    //jehutu pic up korbo to amader js er FormData class nite hobe
+
+    // er age amader title,image,des destructure korte hobe
+
+    const { title, image, description } = state;
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("body", value);
+    formData.append("description", description);
+    formData.append("image", image);
+    formData.append("slug", slug);
+    //name and id nite hobe
+    formData.append("_id", _id);
+    formData.append("name", name);
+
+    //now fire the action
+
+    dispatch(createAction(formData));
   };
 
-  useEffect(() => {
-    effect;
-    return () => {
-      cleanup;
-    };
-  }, [input]);
+  useEffect(() => {}, []);
   return (
     <div className="container">
       <div className="py-12">
