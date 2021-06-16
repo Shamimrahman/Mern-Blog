@@ -33,6 +33,9 @@ app.use(bodyParser.json());
 //router start
 const router = require("./Router/routers");
 app.use(router);
+
+const postrouter = require("./Router/Postrouter");
+app.use(postrouter);
 //middle ware data
 app.use(bodyParser.json());
 //connection
