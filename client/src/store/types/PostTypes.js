@@ -1,4 +1,4 @@
-export const CREATE_POST = "CREATE_POST";
+export const CREATE_ERRORS = "CREATE_ERRORS";
 export const SET_LOADER = "SET_LOADER";
 export const CLOSE_LOADER = "CLOSE_LOADER";
 //NOW TAKE postmethod.js in action folder
