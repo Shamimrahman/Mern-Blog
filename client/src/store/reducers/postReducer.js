@@ -14,8 +14,9 @@ const PostReducer = (state = initialState, action) => {
     return { ...state, loading: false };
   } else if (type === CREATE_ERRORS) {
     return { ...state, createErrors: action.payload };
+  } else {
+    return state;
   }
-  return state;
 };
 
 export default PostReducer;
