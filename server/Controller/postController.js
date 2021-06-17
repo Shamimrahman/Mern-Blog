@@ -1,4 +1,7 @@
 const formidable = require("formidable");
+const { v4: uuidv4 } = require("uuid");
+const fs = require("fs");
+
 module.exports.createpost = (req, res) => {
   //for image
   const form = formidable({ multiples: true });
@@ -27,8 +30,38 @@ module.exports.createpost = (req, res) => {
       error.push({ msg: "slug is Required" });
     }
 
-    if (errors.length != 0) {
-      return res.staus(400).json({ errors });
+    if (Object.keys(files).length === 0) {
+      error.push({ msg: "Image is Required" });
+    } else {
+      //amra just jpeg and png k allow korbo image a
+      const { type } = files.image;
+      const split = type.split("/");
+      //split means image/jpeg like that
+      const extension = split[1].toLowerCase();
+      if (extension !== "jpg" && extension !== "jpeg" && extension !== "png") {
+        imageErrors.push({ msg: `${extension} is not a valid extension` });
+      } else {
+        //jdi extension match kore thn amra ekta uuid te image store korbo
+        //unique name
+        files.image.name = uuidv4() + "." + extension;
+        //directory replace kora
+
+        const newPath =
+          __dirname + `./../../client/public/images${files.image.name}`;
+
+        //ekhn image k ekta specific jaygay save korbo
+        //means directory change korte hobe
+        fs.copyFile(files.image.path, newPath, (error) => {
+          if (!error) {
+            console.log("Image Uploaded");
+          }
+        });
+      }
+
+      if (errors.length != 0) {
+        return res.staus(400).json({ errors, flies });
+      } else {
+      }
     }
 
     //now amra client er postmethods a giye console.log(error.rsponse)kori
