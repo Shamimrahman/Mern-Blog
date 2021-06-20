@@ -3,6 +3,9 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // ES6
 import { createAction } from "../../store/asyncActions/PostMethods";
 import { useDispatch, useSelector } from "react-redux";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const Createpost = () => {
   //redux tools
   const dispatch = useDispatch();
@@ -15,24 +18,29 @@ const Createpost = () => {
 
   console.log(_id, name);
 
+  //error fetch from PostReducer
+  const { createErrors } = useSelector((state) => state.PostReducer);
+
   //for image upload
   const [userImage, setuserImage] = useState("Choose Image");
   //for image preview
   const [imagePreview, setImagePreview] = useState("");
   const fileHandle = (e) => {
-    console.log(e.target.files[0].name);
-    setuserImage(e.target.files[0].name);
+    if (e.target.files.length !== 0) {
+      console.log(e.target.files[0].name);
+      setuserImage(e.target.files[0].name);
 
-    //imagepreview code
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setImagePreview(reader.result);
-    };
-    reader.readAsDataURL(e.target.files[0]);
+      //imagepreview code
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(e.target.files[0]);
 
-    //for send image to backend we need to store image in state which
-    //control input
-    setState({ ...state, [e.target.name]: e.target.files[0] });
+      //for send image to backend we need to store image in state which
+      //control input
+      setState({ ...state, [e.target.name]: e.target.files[0] });
+    }
   };
 
   //for all input
@@ -104,7 +112,12 @@ const Createpost = () => {
     dispatch(createAction(formData));
   };
 
-  useEffect(() => {}, []);
+  /*useEffect(() => {
+    if (createErrors.length !== 0) {
+      createErrors.map((err) => toast.error(err.msg));
+    }
+  }, [createErrors]); */
+
   return (
     <div className="container">
       <div className="py-12">
@@ -253,6 +266,17 @@ const Createpost = () => {
           </form>
         </div>
       </div>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      ></ToastContainer>
     </div>
   );
 };

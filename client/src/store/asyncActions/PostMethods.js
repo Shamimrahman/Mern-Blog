@@ -19,12 +19,10 @@ export const createAction = (postData) => {
       console.log(data);
       dispatch({ type: CLOSE_LOADER });
     } catch (error) {
+      console.log(error.response);
       const { errors } = error.response.data;
       dispatch({ type: CLOSE_LOADER });
       dispatch({ type: CREATE_ERRORS, payload: errors });
-
-      console.log(error.message);
-      console.log(error.response.data);
     }
   };
 };
