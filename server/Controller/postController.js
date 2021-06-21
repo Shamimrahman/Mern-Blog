@@ -15,7 +15,7 @@ module.exports.createpost = (req, res) => {
     console.log({ files });
 
     //destructure fields
-    const { title, description, body, slug, _id, name } = fields;
+    const { title, description, body, slug, id, name } = fields;
 
     //validation
     const errors = [];
@@ -76,7 +76,7 @@ module.exports.createpost = (req, res) => {
                 description,
                 slug,
                 userName: name,
-                userId: _id,
+                userId: id,
               });
               return res.status(200).json({
                 msg: "Your post has been created successfully",
@@ -105,4 +105,10 @@ module.exports.createpost = (req, res) => {
 //express a image upload handle korar jonno amra package formidable install korbo
 
 //fetch posts
-module.exports.fetchPosts = (req, res) => {};
+module.exports.fetchPosts = async (req, res) => {
+  const { id } = req.params.id;
+  try {
+    const response = await Post.find({ userId });
+    return res.status(200).json({ data: response });
+  } catch (error) {}
+};
