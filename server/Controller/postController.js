@@ -103,3 +103,6 @@ module.exports.createpost = (req, res) => {
 };
 
 //express a image upload handle korar jonno amra package formidable install korbo
+
+//fetch posts
+module.exports.fetchPosts = (req, res) => {};
