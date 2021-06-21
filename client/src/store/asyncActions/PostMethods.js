@@ -10,10 +10,24 @@ import {
 } from "../types/PostTypes";
 
 //jar kase valid token ase shudhu shei ai post korbe
-const token = localStorage.getItem("myToken");
+//const token = localStorage.getItem("myToken");
+
+//but amra alternative way teo seita korte pari using redux getState() aita better
+
 export const createAction = (postData) => {
   //post data means form data in create dispatch method
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    //amra dekhbo j amader redux state gulo ki ase
+    const data = getState();
+    console.log("Your state", data);
+    //so amra dekhlam auth reducer ase r post reducer ase
+    //amader auth reducer a token ase
+    //auth reducer theke token nite hobe so auth reducer destructure korte hobe
+    const { AuthReducer } = getState();
+    const { token } = AuthReducer;
+    console.log("Token after Des", token);
+    //server er utils folder er auth ai token verify korbe
+
     dispatch({ type: SET_LOADER });
     try {
       const config = {
@@ -40,3 +54,9 @@ export const createAction = (postData) => {
   };
 };
 //now ai create action k amader createpost comp a use korte hobe or import korte hobe
+
+//fetch action
+
+/*module.exports.fetchPosts = (id) => {
+  return (dispatch, getState) => {};
+}; */
