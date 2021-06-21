@@ -1,5 +1,13 @@
 import axios from "axios";
-import { CREATE_ERRORS, SET_LOADER, CLOSE_LOADER } from "../types/PostTypes";
+import {
+  CREATE_ERRORS,
+  SET_LOADER,
+  CLOSE_LOADER,
+  REDIRECT_TRUE,
+  REDIRECT_FALSE,
+  SET_MESSAGE,
+  REMOVE_MESSAGE,
+} from "../types/PostTypes";
 
 //jar kase valid token ase shudhu shei ai post korbe
 const token = localStorage.getItem("myToken");
@@ -18,6 +26,11 @@ export const createAction = (postData) => {
       const { data } = await axios.post("/createpost", postData, config);
       console.log(data);
       dispatch({ type: CLOSE_LOADER });
+      dispatch({ type: REDIRECT_TRUE });
+      dispatch({
+        type: SET_MESSAGE,
+        payload: "Post has been created successfully",
+      });
     } catch (error) {
       console.log(error.response);
       const { errors } = error.response.data;

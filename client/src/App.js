@@ -26,7 +26,7 @@ export const Routing = () => {
         <PrivateRoute exact path="/home" component={Home}></PrivateRoute>
         <Route exact path="/logout" component={Logout}></Route>
         <PrivateRoute exact path="/blog" component={Blog}></PrivateRoute>
-        <Route exact path="/cp" component={Createpost}></Route>
+        <PrivateRoute exact path="/cp" component={Createpost}></PrivateRoute>
 
         <RouteLinks exact path="/" component={Login}></RouteLinks>
       </Switch>

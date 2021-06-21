@@ -5,8 +5,11 @@ import { createAction } from "../../store/asyncActions/PostMethods";
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useHistory } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
-const Createpost = () => {
+const Createpost = (props) => {
+  const history = useHistory();
   //redux tools
   const dispatch = useDispatch();
 
@@ -19,7 +22,7 @@ const Createpost = () => {
   console.log(_id, name);
 
   //error fetch from PostReducer
-  const { createErrors } = useSelector((state) => state.PostReducer);
+  const { createErrors, redirect } = useSelector((state) => state.PostReducer);
 
   //for image upload
   const [userImage, setuserImage] = useState("Choose Image");
@@ -89,7 +92,7 @@ const Createpost = () => {
   };
 
   //post info from form on submit
-  const createPost = (e) => {
+  const createPost = async (e) => {
     e.preventDefault();
 
     //jehutu pic up korbo to amader js er FormData class nite hobe
@@ -108,15 +111,16 @@ const Createpost = () => {
     formData.append("name", name);
 
     //now fire the action
-
     dispatch(createAction(formData));
   };
 
-  /*useEffect(() => {
-    if (createErrors.length !== 0) {
-      createErrors.map((err) => toast.error(err.msg));
+  useEffect(() => {
+    if (redirect) {
+      props.history.push("/blog");
     }
-  }, [createErrors]); */
+    //ekhn blog component a giye redirect false korbo
+    //dispatch({type:Redirect_False})
+  }, [redirect]);
 
   return (
     <div className="container">
